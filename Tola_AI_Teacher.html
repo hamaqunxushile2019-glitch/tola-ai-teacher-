@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tola AI Teacher</title>
+<title>Tola Ai Teacher</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101827;color:white;font-family:Arial,sans-serif}
@@ -31,7 +31,7 @@ footer{text-align:center;padding:20px;color:#94a3b8}
 <body>
 
 <header>
-<h1>🎓 Tola AI Teacher</h1>
+<h1>🎓 Tola Ai Teacher</h1>
 <p>Barsiisaa Dijitaalaa Afaan Oromoo</p>
 <p>Baradhu • Shaakali • Milkaa'i</p>
 </header>
@@ -91,10 +91,10 @@ footer{text-align:center;padding:20px;color:#94a3b8}
 </div>
 
 <div class="card">
-<h3>🤖 AI Barsiisaa</h3>
+<h3>🤖 Ai Barsiisaa</h3>
 <p>Gaaffii kee Afaan Oromootiin gaafadhu.</p>
 <textarea id="question" placeholder="Fakkeenya: Lakkoofsa 1 hanga 100 na barsiisi..."></textarea>
-<button id="askBtn" onclick="askAI()">AI Barsiisaa Gaafadhu</button>
+<button id="askBtn" onclick="askAI()">Ai Barsiisaa Gaafadhu</button>
 <div id="answer" class="result hidden"></div>
 <button class="back" onclick="speakAnswer()">🔊 Deebii Dubbisi</button>
 <button class="back" onclick="stopSpeech()">Sagalee Dhaabi</button>
@@ -121,7 +121,7 @@ footer{text-align:center;padding:20px;color:#94a3b8}
 </main>
 
 <footer>
-Tola AI Teacher © 2026<br>
+Tola Ai Teacher © 2026<br>
 Barnootaaf • Beekumsaaf • Milkaa'inaaf
 </footer>
 
@@ -224,7 +224,7 @@ return reply;
 async function runAI(prompt,target,button){
 let output=document.getElementById(target);
 output.classList.remove("hidden");
-output.textContent="Xiqqoo na eegi... AI barsiisaa qopheessaa jira. ⏳";
+output.textContent="Xiqqoo na eegi... Ai barsiisaa qopheessaa jira. ⏳";
 button.disabled=true;
 try{
 let reply=await callAI(prompt);
@@ -252,7 +252,7 @@ function teachLesson(){
 let day=document.getElementById("today").textContent;
 let subject=document.querySelector("#schedule p");
 let name=subject?subject.textContent:"Barnoota guyyaa";
-let prompt="Ati Tola AI Teacher. Barataa "+userGrade+
+let prompt="Ati Tola Ai Teacher. Barataa "+userGrade+
 " Naannoo Oromiyaa barsiisi. "+day+
 ". Barnoota har'aa: "+name+
 ". Kaayyoo barnootaa, ibsa salphaa, fakkeenya, shaakala 3 fi deebii qopheessi. "+
