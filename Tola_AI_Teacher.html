@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tola AI Teacher</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#101827;color:white;text-align:center}
+header{padding:28px 15px;background:linear-gradient(135deg,#075985,#6d28d9)}
+header h1{font-size:30px;margin:5px}
+main{padding:20px;max-width:500px;margin:auto}
+.card{background:#1e293b;padding:22px;margin:18px 0;border-radius:18px;border:1px solid #334155}
+button{width:100%;padding:16px;margin-top:12px;border:0;border-radius:12px;background:#0284c7;color:white;font-size:17px;font-weight:bold}
+input,select{width:100%;padding:14px;margin:8px 0;border-radius:10px;border:0;font-size:16px}
+.hidden{display:none}
+.back{background:#475569}
+footer{padding:20px;color:#94a3b8}
+</style>
+</head>
+<body>
+<header>
+<h1>🎓 Tola AI Teacher</h1>
+<p>Barsiisaa Dijitaalaa Afaan Oromoo</p>
+<p>Baradhu • Shaakali • Milkaa'i</p>
+</header>
+<main>
+<section id="home">
+<h2>Baga Nagaan Dhuftan!</h2>
+<p>Maal ta'uu barbaadda?</p>
+<div class="card">
+<h2>👨‍🏫 Barsiisaa</h2>
+<p>Barattoota barsiisi, sagantaa qopheessi.</p>
+<button onclick="showPage('teacher')">Barsiisaa Seeni</button>
+</div>
+<div class="card">
+<h2>👨‍🎓 Barataa</h2>
+<p>Barnoota guyyaa guyyaa baradhu.</p>
+<button onclick="showPage('student')">Barataa Seeni</button>
+</div>
+</section>
+<section id="teacher" class="hidden">
+<h2>👨‍🏫 Galmee Barsiisaa</h2>
+<input id="teacherName" placeholder="Maqaa barsiisaa">
+<input id="school" placeholder="Maqaa mana barumsaa">
+<button onclick="enterTeacher()">Seeni</button>
+<button class="back" onclick="showPage('home')">Duubatti</button>
+</section>
+<section id="student" class="hidden">
+<h2>👨‍🎓 Galmee Barataa</h2>
+<input id="studentName" placeholder="Maqaa barataa">
+<select id="grade">
+<option value="">Kutaa filadhu</option>
+<option>Kutaa 1</option><option>Kutaa 2</option>
+<option>Kutaa 3</option><option>Kutaa 4</option>
+<option>Kutaa 5</option><option>Kutaa 6</option>
+<option>Kutaa 7</option><option>Kutaa 8</option>
+</select>
+<button onclick="enterStudent()">Seeni</button>
+<button class="back" onclick="showPage('home')">Duubatti</button>
+</section>
+<section id="dashboard" class="hidden">
+<h2 id="welcome"></h2>
+<div class="card">
+<h3>📅 Sagantaa Barnootaa</h3>
+<p>Barnoota guyyaa kee ilaali.</p>
+<button onclick="alert('Sagantaan itti aanu keessatti ni banama.')">Sagantaa Koo</button>
+</div>
+<div class="card">
+<h3>📚 Barnoota</h3>
+<button onclick="alert('Barnoonni itti aanu keessatti ni banama.')">Barachuu Jalqabi</button>
+</div>
+<div class="card">
+<h3>📝 Qormaata</h3>
+<button onclick="alert('Qormaanni itti aanu keessatti ni banama.')">Qormaata Fudhadhu</button>
+</div>
+<button class="back" onclick="showPage('home')">Ba'i</button>
+</section>
+</main>
+<footer>Tola AI Teacher © 2026<br>Barnootaaf, Beekumsaaf, Milkaa'inaaf</footer>
+<script>
+function showPage(page){
+document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+document.getElementById(page).classList.remove('hidden');
+}
+function enterTeacher(){
+let name=document.getElementById('teacherName').value.trim();
+if(!name){alert('Maqaa kee galchi');return;}
+document.getElementById('welcome').innerText='Baga nagaan dhuftan Barsiisaa '+name;
+showPage('dashboard');
+}
+function enterStudent(){
+let name=document.getElementById('studentName').value.trim();
+let grade=document.getElementById('grade').value;
+if(!name||!grade){alert('Maqaa fi kutaa kee guuti');return;}
+document.getElementById('welcome').innerText='Baga nagaan dhuftan '+name+' - '+grade;
+showPage('dashboard');
+}
+</script>
+</body>
+                                                                        </html>
+                                                                        
