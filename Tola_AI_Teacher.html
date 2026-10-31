@@ -1,102 +1,296 @@
+
 <!DOCTYPE html>
 <html lang="om">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tola AI Teacher</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#101827;color:white;text-align:center}
-header{padding:28px 15px;background:linear-gradient(135deg,#075985,#6d28d9)}
-header h1{font-size:30px;margin:5px}
-main{padding:20px;max-width:500px;margin:auto}
-.card{background:#1e293b;padding:22px;margin:18px 0;border-radius:18px;border:1px solid #334155}
-button{width:100%;padding:16px;margin-top:12px;border:0;border-radius:12px;background:#0284c7;color:white;font-size:17px;font-weight:bold}
-input,select{width:100%;padding:14px;margin:8px 0;border-radius:10px;border:0;font-size:16px}
+body{margin:0;background:#101827;color:white;font-family:Arial,sans-serif}
+header{background:linear-gradient(130deg,#075985,#6d28d9);padding:23px;text-align:center}
+header h1{margin:0;font-size:29px}
+header p{margin-bottom:0}
+main{max-width:650px;margin:auto;padding:15px}
+.card{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:18px;margin:14px 0}
+h2,h3{color:#38bdf8}
+button,select,input,textarea{font-size:16px;border-radius:10px;padding:13px;width:100%;margin:7px 0}
+button{border:0;background:#0284c7;color:white;font-weight:bold}
+button:disabled{opacity:.5}
+input,select,textarea{background:#f8fafc;color:#111827;border:0}
+textarea{min-height:100px;resize:vertical}
 .hidden{display:none}
 .back{background:#475569}
-footer{padding:20px;color:#94a3b8}
+.result{white-space:pre-wrap;line-height:1.7;background:#0f172a;padding:15px;border-radius:12px;margin-top:12px;overflow-wrap:anywhere}
+.small{color:#cbd5e1;font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid button{min-height:65px}
+footer{text-align:center;padding:20px;color:#94a3b8}
 </style>
 </head>
 <body>
+
 <header>
 <h1>🎓 Tola AI Teacher</h1>
 <p>Barsiisaa Dijitaalaa Afaan Oromoo</p>
 <p>Baradhu • Shaakali • Milkaa'i</p>
 </header>
+
 <main>
+
 <section id="home">
+<div class="card">
 <h2>Baga Nagaan Dhuftan!</h2>
-<p>Maal ta'uu barbaadda?</p>
-<div class="card">
-<h2>👨‍🏫 Barsiisaa</h2>
-<p>Barattoota barsiisi, sagantaa qopheessi.</p>
-<button onclick="showPage('teacher')">Barsiisaa Seeni</button>
-</div>
-<div class="card">
-<h2>👨‍🎓 Barataa</h2>
-<p>Barnoota guyyaa guyyaa baradhu.</p>
-<button onclick="showPage('student')">Barataa Seeni</button>
+<p>Ati eenyu?</p>
+<button onclick="show('teacher')">👨‍🏫 Barsiisaa</button>
+<button onclick="show('student')">👨‍🎓 Barataa</button>
 </div>
 </section>
+
 <section id="teacher" class="hidden">
-<h2>👨‍🏫 Galmee Barsiisaa</h2>
+<div class="card">
+<h2>Galmee Barsiisaa</h2>
 <input id="teacherName" placeholder="Maqaa barsiisaa">
 <input id="school" placeholder="Maqaa mana barumsaa">
-<button onclick="enterTeacher()">Seeni</button>
-<button class="back" onclick="showPage('home')">Duubatti</button>
+<button onclick="loginTeacher()">Seeni</button>
+<button class="back" onclick="show('home')">Duubatti</button>
+</div>
 </section>
+
 <section id="student" class="hidden">
-<h2>👨‍🎓 Galmee Barataa</h2>
+<div class="card">
+<h2>Galmee Barataa</h2>
 <input id="studentName" placeholder="Maqaa barataa">
 <select id="grade">
 <option value="">Kutaa filadhu</option>
-<option>Kutaa 1</option><option>Kutaa 2</option>
-<option>Kutaa 3</option><option>Kutaa 4</option>
-<option>Kutaa 5</option><option>Kutaa 6</option>
-<option>Kutaa 7</option><option>Kutaa 8</option>
+<option>Kutaa 1</option>
+<option>Kutaa 2</option>
+<option>Kutaa 3</option>
+<option>Kutaa 4</option>
+<option>Kutaa 5</option>
+<option>Kutaa 6</option>
+<option>Kutaa 7</option>
+<option>Kutaa 8</option>
 </select>
-<button onclick="enterStudent()">Seeni</button>
-<button class="back" onclick="showPage('home')">Duubatti</button>
+<button onclick="loginStudent()">Seeni</button>
+<button class="back" onclick="show('home')">Duubatti</button>
+</div>
 </section>
+
 <section id="dashboard" class="hidden">
+<div class="card">
 <h2 id="welcome"></h2>
+<p id="roleInfo"></p>
+</div>
+
 <div class="card">
 <h3>📅 Sagantaa Barnootaa</h3>
-<p>Barnoota guyyaa kee ilaali.</p>
-<button onclick="alert('Sagantaan itti aanu keessatti ni banama.')">Sagantaa Koo</button>
+<p id="today"></p>
+<div id="schedule"></div>
+<button onclick="teachLesson()">Barnoota Guyyaa Barsiisi</button>
 </div>
+
 <div class="card">
-<h3>📚 Barnoota</h3>
-<button onclick="alert('Barnoonni itti aanu keessatti ni banama.')">Barachuu Jalqabi</button>
+<h3>🤖 AI Barsiisaa</h3>
+<p>Gaaffii kee Afaan Oromootiin gaafadhu.</p>
+<textarea id="question" placeholder="Fakkeenya: Lakkoofsa 1 hanga 100 na barsiisi..."></textarea>
+<button id="askBtn" onclick="askAI()">AI Barsiisaa Gaafadhu</button>
+<div id="answer" class="result hidden"></div>
+<button class="back" onclick="speakAnswer()">🔊 Deebii Dubbisi</button>
+<button class="back" onclick="stopSpeech()">Sagalee Dhaabi</button>
 </div>
+
 <div class="card">
-<h3>📝 Qormaata</h3>
-<button onclick="alert('Qormaanni itti aanu keessatti ni banama.')">Qormaata Fudhadhu</button>
+<h3>📝 Shaakala fi Qormaata</h3>
+<p>Gaaffii qormaataa qopheessi.</p>
+<select id="subject">
+<option>Herrega</option>
+<option>Afaan Oromoo</option>
+<option>English</option>
+<option>Saayinsii Waliigalaa</option>
+<option>Barnoota Hawaasaa</option>
+<option>Saayinsii Naannoo</option>
+</select>
+<button onclick="makeQuiz()">Qormaata Naaf Qopheessi</button>
+<div id="quiz" class="result hidden"></div>
 </div>
-<button class="back" onclick="showPage('home')">Ba'i</button>
+
+<button class="back" onclick="logout()">Ba'i</button>
 </section>
+
 </main>
-<footer>Tola AI Teacher © 2026<br>Barnootaaf, Beekumsaaf, Milkaa'inaaf</footer>
+
+<footer>
+Tola AI Teacher © 2026<br>
+Barnootaaf • Beekumsaaf • Milkaa'inaaf
+</footer>
+
 <script>
-function showPage(page){
-document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
-document.getElementById(page).classList.remove('hidden');
+const API_URL =
+"https://tola-ai-chat-2026.hamaqunxushile2019.workers.dev";
+
+let userRole="";
+let userName="";
+let userGrade="";
+let history=[];
+
+function show(id){
+document.querySelectorAll("main section").forEach(s=>{
+s.classList.add("hidden");
+});
+document.getElementById(id).classList.remove("hidden");
 }
-function enterTeacher(){
-let name=document.getElementById('teacherName').value.trim();
-if(!name){alert('Maqaa kee galchi');return;}
-document.getElementById('welcome').innerText='Baga nagaan dhuftan Barsiisaa '+name;
-showPage('dashboard');
+
+function loginTeacher(){
+let name=document.getElementById("teacherName").value.trim();
+if(!name){alert("Maqaa kee galchi");return;}
+userRole="Barsiisaa";
+userName=name;
+userGrade="Kutaa 1–8";
+openDashboard();
 }
-function enterStudent(){
-let name=document.getElementById('studentName').value.trim();
-let grade=document.getElementById('grade').value;
-if(!name||!grade){alert('Maqaa fi kutaa kee guuti');return;}
-document.getElementById('welcome').innerText='Baga nagaan dhuftan '+name+' - '+grade;
-showPage('dashboard');
+
+function loginStudent(){
+let name=document.getElementById("studentName").value.trim();
+let grade=document.getElementById("grade").value;
+if(!name||!grade){
+alert("Maqaa fi kutaa filadhu");
+return;
+}
+userRole="Barataa";
+userName=name;
+userGrade=grade;
+openDashboard();
+}
+
+function openDashboard(){
+history=[];
+document.getElementById("welcome").textContent=
+"Baga nagaan dhuftan "+userName;
+document.getElementById("roleInfo").textContent=
+userRole+" | "+userGrade+" | Oromiyaa";
+show("dashboard");
+makeSchedule();
+}
+
+function makeSchedule(){
+const days=[
+"Wiixata","Kibxata","Roobii","Kamiisa",
+"Jimaata","Sanbata","Dilbata"
+];
+let day=new Date().getDay();
+let names=[
+"Dilbata","Wiixata","Kibxata","Roobii",
+"Kamiisa","Jimaata","Sanbata"
+];
+let subjects=[
+"Herrega","Afaan Oromoo","English",
+"Saayinsii Waliigalaa",
+"Barnoota Hawaasaa",
+"Saayinsii Naannoo"
+];
+let index=day===0?0:day-1;
+document.getElementById("today").textContent=
+"Guyyaa: "+names[day]+" | "+userGrade;
+
+let html="";
+for(let i=0;i<subjects.length;i++){
+html+="<p>⏰ "+(i+1)+". "+subjects[(i+index)%subjects.length]+"</p>";
+}
+document.getElementById("schedule").innerHTML=html;
+}
+
+async function callAI(message){
+let response=await fetch(API_URL,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+message:message,
+language:"om",
+history:history.slice(-12)
+})
+});
+if(!response.ok){
+throw new Error("Tajaajilli AI amma deebii hin kennine. Error: "+response.status);
+}
+let data=await response.json();
+let reply=data.reply||data.answer||data.text;
+if(!reply)throw new Error(data.error||"Deebiin AI hin argamne.");
+history.push({role:"user",content:message});
+history.push({role:"assistant",content:reply});
+return reply;
+}
+
+async function runAI(prompt,target,button){
+let output=document.getElementById(target);
+output.classList.remove("hidden");
+output.textContent="Xiqqoo na eegi... AI barsiisaa qopheessaa jira. ⏳";
+button.disabled=true;
+try{
+let reply=await callAI(prompt);
+output.textContent=reply;
+}catch(error){
+output.textContent="Dhiifama! "+error.message+
+"\nNetwork, Cloudflare fi Gemini quota kee mirkaneessi.";
+}finally{
+button.disabled=false;
+}
+}
+
+function askAI(){
+let q=document.getElementById("question").value.trim();
+if(!q){alert("Gaaffii kee barreessi");return;}
+let prompt="Ati Tola AI Teacher, barsiisaa Afaan Oromoo ti. "+
+"Naannoo Oromiyaa keessatti barattoota "+userGrade+
+" barsiista. Barataa: "+userName+
+". Afaan Oromoo sirrii fayyadami. Mata duree salphisi, fakkeenya kenni, "+
+"tartiibaan barsiisi. Gaaffii barataa kana deebisi: "+q;
+runAI(prompt,"answer",document.getElementById("askBtn"));
+}
+
+function teachLesson(){
+let day=document.getElementById("today").textContent;
+let subject=document.querySelector("#schedule p");
+let name=subject?subject.textContent:"Barnoota guyyaa";
+let prompt="Ati Tola AI Teacher. Barataa "+userGrade+
+" Naannoo Oromiyaa barsiisi. "+day+
+". Barnoota har'aa: "+name+
+". Kaayyoo barnootaa, ibsa salphaa, fakkeenya, shaakala 3 fi deebii qopheessi. "+
+"Afaan Oromoo sirrii fayyadami. Qabiyyee curriculum irratti mirkanaa'e qofa akka ta'e hin himin yoo hin mirkanoofne.";
+runAI(prompt,"answer",document.querySelector("#dashboard .card:nth-of-type(3) button"));
+}
+
+function makeQuiz(){
+let subject=document.getElementById("subject").value;
+let prompt="Barataa "+userGrade+" Naannoo Oromiyaa"+
+"f barnoota "+subject+
+" irratti hundaa'uun qormaata gaaffii 5 qopheessi. "+
+"Gaaffii filannoo A, B, C, D fayyadami. Deebii sirrii fi ibsa dhuma irratti kenni. Afaan Oromoo fayyadami.";
+runAI(prompt,"quiz",document.querySelector("#dashboard .card:nth-of-type(4) button"));
+}
+
+function speakAnswer(){
+let text=document.getElementById("answer").textContent;
+if(!text||!window.speechSynthesis){
+alert("Sagaleen dubbisuu bilbila kana irratti hin deeggaramu.");
+return;
+}
+speechSynthesis.cancel();
+let speech=new SpeechSynthesisUtterance(text);
+speech.lang="om-ET";
+speech.rate=0.9;
+speechSynthesis.speak(speech);
+}
+
+function stopSpeech(){
+if(window.speechSynthesis)speechSynthesis.cancel();
+}
+
+function logout(){
+stopSpeech();
+history=[];
+show("home");
 }
 </script>
 </body>
-                                                                        </html>
-                                                                        
+</html>
