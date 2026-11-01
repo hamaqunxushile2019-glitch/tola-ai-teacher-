@@ -1,1 +1,278 @@
 
+<!DOCTYPE html>
+<html lang="om">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tola AI Teacher</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,sans-serif;
+ background:#eef3f9;color:#17243a;
+}
+header{
+ background:#102b50;color:white;
+ padding:22px 14px;text-align:center;
+}
+header h1{margin:0 0 8px}
+header p{margin:0}
+main{max-width:850px;margin:20px auto;padding:12px}
+.card{
+ background:white;padding:20px;margin-bottom:16px;
+ border-radius:14px;box-shadow:0 3px 12px #00000012;
+}
+h2{color:#123b68}
+input,select,textarea{
+ width:100%;padding:13px;margin:7px 0 14px;
+ border:1px solid #bbc8d8;border-radius:8px;
+ font-size:16px;
+}
+button{
+ background:#1264b0;color:white;border:0;
+ padding:13px 17px;border-radius:9px;
+ font-size:16px;margin:5px;cursor:pointer;
+}
+button:hover{background:#0b477f}
+.secondary{background:#52677e}
+.hidden{display:none}
+.result{
+ background:#edf5ff;padding:15px;
+ border-radius:9px;line-height:1.6;
+ white-space:pre-wrap;
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+footer{text-align:center;color:#64748b;padding:20px}
+@media(max-width:550px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>📚 Tola AI Teacher</h1>
+<p>Barsiisaa fi Barataa Afaan Oromoo</p>
+</header>
+
+<main>
+
+<section id="home" class="card">
+<h2>Baga nagaan dhuftan!</h2>
+<p>Appii Tola AI Teacher keessatti gahee kee filadhu.</p>
+<button onclick="showTeacher()">👨‍🏫 Barsiisaa</button>
+<button onclick="showStudent()">🎓 Barataa</button>
+</section>
+
+<section id="teacher" class="card hidden">
+<h2>Galmee Barsiisaa</h2>
+<label>Maqaa barsiisaa</label>
+<input id="teacherName" placeholder="Maqaa kee galchi">
+<label>Maqaa mana barumsaa</label>
+<input id="schoolName" placeholder="Maqaa mana barumsaa">
+<button onclick="enterTeacher()">Seeni</button>
+<button class="secondary" onclick="goHome()">Duubatti</button>
+</section>
+
+<section id="student" class="card hidden">
+<h2>Galmee Barataa</h2>
+<label>Maqaa barataa</label>
+<input id="studentName" placeholder="Maqaa kee galchi">
+<label>Sadarkaa barnootaa</label>
+<select id="grade">
+<option value="">Kutaa filadhu</option>
+<option>1</option><option>2</option><option>3</option>
+<option>4</option><option>5</option><option>6</option>
+<option>7</option><option>8</option>
+</select>
+<button onclick="enterStudent()">Seeni</button>
+<button class="secondary" onclick="goHome()">Duubatti</button>
+</section>
+
+<section id="teacherDash" class="hidden">
+<div class="card">
+<h2>👨‍🏫 Dashboard Barsiisaa</h2>
+<p id="teacherWelcome"></p>
+<h3>Hojii barsiisaa</h3>
+<ul>
+<li>Sagantaa barnootaa ilaali.</li>
+<li>Barattootaaf gaaffii qopheessi.</li>
+<li>Barnoota irratti ibsa kenni.</li>
+</ul>
+<button onclick="showSchedule()">Sagantaa barnootaa</button>
+<button onclick="showLesson()">Barnoota qopheessi</button>
+<button onclick="goHome()">Ba'i</button>
+</div>
+</section>
+
+<section id="studentDash" class="hidden">
+<div class="card">
+<h2>🎓 Dashboard Barataa</h2>
+<p id="studentWelcome"></p>
+<button onclick="showSchedule()">Sagantaa barnootaa</button>
+<button onclick="showLesson()">Barnoota baradhu</button>
+<button onclick="showQuiz()">Qormaata hojjedhu</button>
+<button onclick="goHome()">Ba'i</button>
+</div>
+</section>
+
+<section id="schedule" class="card hidden">
+<h2>📅 Sagantaa Barnootaa</h2>
+<div class="result">
+Wiixata: Afaan Oromoo, Herrega
+Kibxata: Afaan Ingilizii, Saayinsii
+Roobii: Herrega, Afaan Oromoo
+Kamiisa: Saayinsii, Hawaasummaa
+Jimaata: Afaan Ingilizii, Hawaasummaa
+
+Hubachiisa: Sagantaan kun fakkeenya qofa.
+Mana barumsaa keessaniin sirreessuu dandeessu.
+</div>
+<button onclick="backDashboard()">Duubatti</button>
+</section>
+
+<section id="lesson" class="card hidden">
+<h2>🤖 Gargaaraa Barnootaa</h2>
+<label>Mata duree barnootaa</label>
+<input id="topic" placeholder="Fakkeenya: Lakkoofsa">
+<label>Sadarkaa kutaa</label>
+<select id="lessonGrade">
+<option>1</option><option>2</option><option>3</option>
+<option>4</option><option>5</option><option>6</option>
+<option>7</option><option>8</option>
+</select>
+<label>Gaaffii kee barreessi</label>
+<textarea id="question" rows="4" placeholder="Maal barachuu barbaadda?"></textarea>
+<button onclick="answerQuestion()">Deebii argadhu</button>
+<button class="secondary" onclick="speakAnswer()">🔊 Sagaleedhaan dubbisi</button>
+<div id="answer" class="result">Deebiin asitti mul'ata.</div>
+<button onclick="backDashboard()">Duubatti</button>
+</section>
+
+<section id="quiz" class="card hidden">
+<h2>📝 Qormaata</h2>
+<p>Gaaffii kana deebisi:</p>
+<p><b>5 + 3 = meeqa?</b></p>
+<div>
+<label><input type="radio" name="q1" value="6"> 6</label><br>
+<label><input type="radio" name="q1" value="8"> 8</label><br>
+<label><input type="radio" name="q1" value="9"> 9</label>
+</div>
+<button onclick="checkQuiz()">Deebii mirkaneessi</button>
+<div id="quizResult" class="result"></div>
+<button onclick="backDashboard()">Duubatti</button>
+</section>
+
+</main>
+
+<footer>
+Tola AI Teacher © 2026
+</footer>
+
+<script>
+let role = "";
+
+function hideAll(){
+ ["home","teacher","student","teacherDash","studentDash",
+ "schedule","lesson","quiz"].forEach(id=>{
+  document.getElementById(id).classList.add("hidden");
+ });
+}
+function goHome(){
+ hideAll();
+ role="";
+ document.getElementById("home").classList.remove("hidden");
+}
+function showTeacher(){
+ hideAll();
+ document.getElementById("teacher").classList.remove("hidden");
+}
+function showStudent(){
+ hideAll();
+ document.getElementById("student").classList.remove("hidden");
+}
+function enterTeacher(){
+ let name=document.getElementById("teacherName").value.trim();
+ let school=document.getElementById("schoolName").value.trim();
+ if(!name||!school){alert("Maaloo odeeffannoo guuti.");return;}
+ role="teacher";
+ hideAll();
+ document.getElementById("teacherDash").classList.remove("hidden");
+ document.getElementById("teacherWelcome").innerText=
+ "Baga nagaan dhuftan, "+name+"! Mana barumsaa: "+school;
+}
+function enterStudent(){
+ let name=document.getElementById("studentName").value.trim();
+ let grade=document.getElementById("grade").value;
+ if(!name||!grade){alert("Maaloo maqaa fi kutaa guuti.");return;}
+ role="student";
+ hideAll();
+ document.getElementById("studentDash").classList.remove("hidden");
+ document.getElementById("studentWelcome").innerText=
+ "Baga nagaan dhuftan, "+name+"! Barataa kutaa "+grade;
+ document.getElementById("lessonGrade").value=grade;
+}
+function showSchedule(){
+ hideAll();
+ document.getElementById("schedule").classList.remove("hidden");
+}
+function showLesson(){
+ hideAll();
+ document.getElementById("lesson").classList.remove("hidden");
+}
+function showQuiz(){
+ hideAll();
+ document.getElementById("quiz").classList.remove("hidden");
+}
+function backDashboard(){
+ hideAll();
+ if(role==="teacher"){
+  document.getElementById("teacherDash").classList.remove("hidden");
+ }else if(role==="student"){
+  document.getElementById("studentDash").classList.remove("hidden");
+ }else{
+  goHome();
+ }
+}
+function answerQuestion(){
+ let topic=document.getElementById("topic").value.trim();
+ let question=document.getElementById("question").value.trim();
+ let grade=document.getElementById("lessonGrade").value;
+ let output=document.getElementById("answer");
+ if(!topic&&!question){
+  output.innerText="Maaloo mata duree ykn gaaffii kee barreessi.";
+  return;
+ }
+ output.innerText=
+ "Barnoota kutaa "+grade+"\n"+
+ "Mata duree: "+topic+"\n\n"+
+ "Gaaffii kee: "+question+"\n\n"+
+ "Kun gargaaraa barnootaa bu'uuraa dha. Deebii sirrii fi bal'aa AI irraa argachuuf server AI walitti hidhuun barbaachisa.";
+}
+function speakAnswer(){
+ let text=document.getElementById("answer").innerText;
+ if(!("speechSynthesis" in window)){
+  alert("Meeshaan kee dubbisa sagalee hin deeggaru.");
+  return;
+ }
+ let speech=new SpeechSynthesisUtterance(text);
+ speech.lang="om-ET";
+ speechSynthesis.cancel();
+ speechSynthesis.speak(speech);
+}
+function checkQuiz(){
+ let selected=document.querySelector('input[name="q1"]:checked');
+ let result=document.getElementById("quizResult");
+ if(!selected){
+  result.innerText="Maaloo deebii tokko filadhu.";
+  return;
+ }
+ if(selected.value==="8"){
+  result.innerText="Sirrii dha! Qabxii kee: 1/1. Baga gammaddan!";
+ }else{
+  result.innerText="Deebiin sirrii miti. Irra deebi'ii yaali.";
+ }
+}
+</script>
+
+</body>
+  </html>
+  
