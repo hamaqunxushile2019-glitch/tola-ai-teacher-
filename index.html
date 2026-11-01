@@ -1,57 +1,64 @@
-
 <!DOCTYPE html>
 <html lang="om">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tola AI Teacher 2.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tola AI Teacher 3.0</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#eef3f9;color:#17243a;font-family:Arial,sans-serif}
-header{background:#102b50;color:white;text-align:center;padding:22px 12px}
+header{background:#102b50;color:white;text-align:center;padding:22px 10px}
+header h1{margin:0 0 8px}
 main{max-width:850px;margin:18px auto;padding:12px}
 .card{background:white;padding:18px;margin-bottom:15px;border-radius:14px;box-shadow:0 3px 12px #0001}
 h2{color:#164b7c}
-button{background:#1264b0;color:white;border:0;padding:12px 16px;border-radius:9px;margin:5px;font-size:15px;cursor:pointer}
-button.secondary{background:#53677e}
+button{background:#1264b0;color:white;border:0;padding:12px 15px;border-radius:9px;margin:5px;font-size:15px;cursor:pointer}
+.secondary{background:#53677e}
 input,select{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #bdc9d8;border-radius:8px;font-size:16px}
 .hidden{display:none}
 .result{background:#edf5ff;padding:14px;border-radius:9px;line-height:1.7;white-space:pre-wrap}
-.question{padding:12px;border-bottom:1px solid #ddd}
 label{display:block;margin:8px 0}
+.question{padding:12px;border-bottom:1px solid #ddd}
 footer{text-align:center;padding:20px;color:#64748b}
 </style>
 </head>
 <body>
+
 <header>
 <h1>📚 Tola AI Teacher</h1>
-<p>Barsiisaa fi Barataa Afaan Oromoo</p>
-<p>Version 2.0</p>
+<p>Version 3.0 | Barnoota fi Bashannana</p>
 </header>
 
 <main>
+
 <section id="home" class="card">
-<h2>Baga nagaan dhuftan!</h2>
-<p>Gahee kee filadhu.</p>
-<button onclick="openPage('teacherLogin')">👨‍🏫 Barsiisaa</button>
-<button onclick="openPage('studentLogin')">🎓 Barataa</button>
+<h2 id="welcome">Baga nagaan dhuftan!</h2>
+<label>🌍 Afaan filadhu / Choose language</label>
+<select id="language" onchange="changeLanguage()">
+<option value="om">Afaan Oromoo</option>
+<option value="am">አማርኛ</option>
+<option value="en">English</option>
+</select>
+<p id="chooseRole">Gahee kee filadhu:</p>
+<button id="teacherBtn" onclick="openPage('teacherLogin')">👨‍🏫 Barsiisaa</button>
+<button id="studentBtn" onclick="openPage('studentLogin')">🎓 Barataa</button>
 </section>
 
 <section id="teacherLogin" class="card hidden">
-<h2>Galmee Barsiisaa</h2>
-<label>Maqaa barsiisaa</label>
+<h2 id="teacherTitle">Galmee Barsiisaa</h2>
+<label id="teacherNameLabel">Maqaa barsiisaa</label>
 <input id="teacherName" placeholder="Maqaa kee">
-<label>Maqaa mana barumsaa</label>
-<input id="school" placeholder="Mana barumsaa">
+<label id="schoolLabel">Maqaa mana barumsaa</label>
+<input id="school" placeholder="Maqaa mana barumsaa">
 <button onclick="teacherEnter()">Seeni</button>
 <button class="secondary" onclick="openPage('home')">Duubatti</button>
 </section>
 
 <section id="studentLogin" class="card hidden">
-<h2>Galmee Barataa</h2>
-<label>Maqaa barataa</label>
+<h2 id="studentTitle">Galmee Barataa</h2>
+<label id="studentNameLabel">Maqaa barataa</label>
 <input id="studentName" placeholder="Maqaa kee">
-<label>Kutaa</label>
+<label id="gradeLabel">Kutaa</label>
 <select id="grade">
 <option value="">Kutaa filadhu</option>
 <option>1</option><option>2</option><option>3</option>
@@ -66,8 +73,8 @@ footer{text-align:center;padding:20px;color:#64748b}
 <h2>👨‍🏫 Dashboard Barsiisaa</h2>
 <p id="teacherInfo"></p>
 <button onclick="openPage('schedule')">📅 Sagantaa</button>
-<button onclick="showScores()">📊 Qabxii barattootaa</button>
 <button onclick="openPage('lesson')">📚 Barnoota</button>
+<button onclick="showScores()">📊 Qabxii barattootaa</button>
 <button onclick="logout()">Ba'i</button>
 </section>
 
@@ -78,6 +85,7 @@ footer{text-align:center;padding:20px;color:#64748b}
 <button onclick="openPage('lesson')">📚 Barnoota</button>
 <button onclick="startQuiz()">📝 Qormaata</button>
 <button onclick="myScores()">📊 Qabxii koo</button>
+<button onclick="openPage('fun')">🎮 Bakka bashannanaa</button>
 <button onclick="logout()">Ba'i</button>
 </section>
 
@@ -87,23 +95,33 @@ footer{text-align:center;padding:20px;color:#64748b}
 Wiixata: Afaan Oromoo, Herrega
 Kibxata: Afaan Ingilizii, Saayinsii
 Roobii: Herrega, Afaan Oromoo
-Kamiisa: Saayinsii, Hawaasummaa
-Jimaata: Afaan Ingilizii, Hawaasummaa
+Kamiisa: Saayinsii, Hawaasa
+Jimaata: Afaan Ingilizii, Hawaasa
 
-Hubachiisa: Sagantaan kun fakkeenya dha. Barsiisaan mana barumsaa keessatti sirreessuu qaba.
+Hubachiisa: Sagantaan kun fakkeenya dha.
+Barsiisaan sirreessuu danda'a.
 </div>
 <button onclick="backDash()">Duubatti</button>
 </section>
 
 <section id="lesson" class="card hidden">
-<h2>📚 Gargaaraa Barnootaa</h2>
-<label>Mata duree</label>
-<input id="topic" placeholder="Fakkeenya: Lakkoofsa">
-<label>Gaaffii kee</label>
-<input id="ask" placeholder="Maal barachuu barbaadda?">
-<button onclick="explain()">Ibsa argadhu</button>
-<button onclick="readLesson()" class="secondary">🔊 Dubbisi</button>
-<div id="lessonResult" class="result">Ibsi asitti mul'ata.</div>
+<h2>📚 Barnoota</h2>
+<label>Barnoota filadhu</label>
+<select id="subjectLesson" onchange="showSubjectInfo()">
+<option value="oromoo">Afaan Oromoo</option>
+<option value="math">Herrega</option>
+<option value="science">Saayinsii</option>
+<option value="english">Afaan Ingilizii</option>
+<option value="social">Hawaasa</option>
+</select>
+<label>Sadarkaa kutaa</label>
+<select id="lessonGrade">
+<option>1</option><option>2</option><option>3</option>
+<option>4</option><option>5</option><option>6</option>
+<option>7</option><option>8</option>
+</select>
+<div id="lessonText" class="result"></div>
+<button onclick="readLesson()">🔊 Dubbisi</button>
 <button onclick="backDash()">Duubatti</button>
 </section>
 
@@ -111,9 +129,12 @@ Hubachiisa: Sagantaan kun fakkeenya dha. Barsiisaan mana barumsaa keessatti sirr
 <h2>📝 Qormaata</h2>
 <p id="quizInfo"></p>
 <label>Barnoota filadhu</label>
-<select id="subject" onchange="loadQuestions()">
+<select id="subjectQuiz" onchange="loadQuestions()">
 <option value="math">Herrega</option>
 <option value="oromoo">Afaan Oromoo</option>
+<option value="science">Saayinsii</option>
+<option value="english">Afaan Ingilizii</option>
+<option value="social">Hawaasa</option>
 </select>
 <div id="questions"></div>
 <button onclick="submitQuiz()">Qormaata xumuri</button>
@@ -121,11 +142,66 @@ Hubachiisa: Sagantaan kun fakkeenya dha. Barsiisaan mana barumsaa keessatti sirr
 <button onclick="backDash()">Duubatti</button>
 </section>
 
+<section id="fun" class="card hidden">
+<h2>🎮 Bakka Bashannanaa</h2>
+<p>Tapha filadhu!</p>
+<button onclick="openPage('riddle')">🤔 Hibboo</button>
+<button onclick="openPage('mathGame')">🔢 Tapha Herregaa</button>
+<button onclick="openPage('story')">📖 Seenaa</button>
+<button onclick="openPage('memory')">🧠 Tapha Sammuu</button>
+<button onclick="backDash()">Duubatti</button>
+</section>
+
+<section id="riddle" class="card hidden">
+<h2>🤔 Hibboo</h2>
+<p>Guyyaa keessa ifa kenna, halkan ni dhokata. Maali?</p>
+<button onclick="document.getElementById('riddleAnswer').innerText='Deebiin: Aduudha!'">Deebii ilaali</button>
+<div id="riddleAnswer" class="result"></div>
+<button onclick="openPage('fun')">Duubatti</button>
+</section>
+
+<section id="mathGame" class="card hidden">
+<h2>🔢 Tapha Herregaa</h2>
+<p id="mathQuestion">7 + 5 = meeqa?</p>
+<input id="mathAnswer" type="number" placeholder="Deebii barreessi">
+<button onclick="checkMath()">Mirkaneessi</button>
+<div id="mathResult" class="result"></div>
+<button onclick="newMath()">Gaaffii biraa</button>
+<button onclick="openPage('fun')">Duubatti</button>
+</section>
+
+<section id="story" class="card hidden">
+<h2>📖 Seenaa Gabaabaa</h2>
+<div class="result">
+**Mucaa fi Mukaa**
+
+Mucaan tokko muka xiqqoo dhaabe. Guyyaa guyyaan bishaan obaase. Yeroo booda mukti guddatee gaaddisa kenneef.
+
+Barumsa: Wanti gaariin obsaa fi kunuunsa barbaada.
+</div>
+<button onclick="readStory()">🔊 Seenaa dubbisi</button>
+<button onclick="openPage('fun')">Duubatti</button>
+</section>
+
+<section id="memory" class="card hidden">
+<h2>🧠 Tapha Sammuu</h2>
+<p>Jecha kana yaadadhu: <b id="memoryWord">MUKA</b></p>
+<button onclick="showMemoryQuestion()">Itti fufi</button>
+<div id="memoryQuestion" class="hidden">
+<p>Jecha siif kenname maal ture?</p>
+<input id="memoryAnswer" placeholder="Deebii kee">
+<button onclick="checkMemory()">Mirkaneessi</button>
+</div>
+<div id="memoryResult" class="result"></div>
+<button onclick="openPage('fun')">Duubatti</button>
+</section>
+
 <section id="scores" class="card hidden">
 <h2>📊 Qabxii Barattootaa</h2>
 <div id="scoresList" class="result"></div>
 <button onclick="backDash()">Duubatti</button>
 </section>
+
 </main>
 
 <footer>Tola AI Teacher © 2026</footer>
@@ -136,74 +212,147 @@ let currentName="";
 let currentGrade="";
 let currentQuestions=[];
 
+const words={
+om:{
+welcome:"Baga nagaan dhuftan!",
+choose:"Gahee kee filadhu:",
+teacher:"Barsiisaa",student:"Barataa"
+},
+am:{
+welcome:"እንኳን ደህና መጡ!",
+choose:"ሚናዎን ይምረጡ:",
+teacher:"መምህር",student:"ተማሪ"
+},
+en:{
+welcome:"Welcome!",
+choose:"Choose your role:",
+teacher:"Teacher",student:"Student"
+}
+};
+
+function changeLanguage(){
+ let l=document.getElementById("language").value;
+ document.getElementById("welcome").innerText=words[l].welcome;
+ document.getElementById("chooseRole").innerText=words[l].choose;
+ document.getElementById("teacherBtn").innerText="👨‍🏫 "+words[l].teacher;
+ document.getElementById("studentBtn").innerText="🎓 "+words[l].student;
+}
+
 function openPage(id){
  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
  document.getElementById(id).classList.remove("hidden");
 }
+
 function teacherEnter(){
  let n=document.getElementById("teacherName").value.trim();
  let s=document.getElementById("school").value.trim();
  if(!n||!s){alert("Maaloo odeeffannoo guuti.");return;}
  role="teacher";currentName=n;
- document.getElementById("teacherInfo").innerText="Baga nagaan dhuftan "+n+" - "+s;
+ document.getElementById("teacherInfo").innerText="Barsiisaa: "+n+" | Mana barumsaa: "+s;
  openPage("teacherDash");
 }
+
 function studentEnter(){
  let n=document.getElementById("studentName").value.trim();
  let g=document.getElementById("grade").value;
  if(!n||!g){alert("Maqaa fi kutaa guuti.");return;}
  role="student";currentName=n;currentGrade=g;
  document.getElementById("studentInfo").innerText="Barataa: "+n+" | Kutaa: "+g;
+ document.getElementById("lessonGrade").value=g;
  openPage("studentDash");
 }
+
 function logout(){
  role="";currentName="";currentGrade="";
  openPage("home");
 }
+
 function backDash(){
  openPage(role==="teacher"?"teacherDash":"studentDash");
 }
-function explain(){
- let topic=document.getElementById("topic").value.trim();
- let ask=document.getElementById("ask").value.trim();
- if(!topic&&!ask){alert("Mata duree ykn gaaffii barreessi.");return;}
- document.getElementById("lessonResult").innerText=
- "Mata duree: "+topic+"\nGaaffii: "+ask+
- "\n\nGorsa: Mata duree kana kitaaba barataa keessatti dubbisi. Barsiisaa kee gaafadhu, fakkeenya hojiirra oolchi, achiis waan baratte irra deebi'i.\n\nHubachiisa: Kun gargaarsa bu'uuraa dha; AI online waliin ammallee hin walqabanne.";
+
+const lessonInfo={
+oromoo:"Afaan Oromoo: dubbisuu, barreessuu, qubee, jechoota fi himoota baradhu.",
+math:"Herrega: lakkoofsota, ida'uu, hir'isuu, baay'isuu fi hiruu shaakali.",
+science:"Saayinsii: qaama namaa, biqiltoota, bineensota, bishaanii fi naannoo baradhu.",
+english:"English: Learn letters, words, greetings and simple sentences.",
+social:"Hawaasa: maatii, hawaasa, aadaa, seenaa, naannoo fi itti gaafatamummaa baradhu."
+};
+
+function showSubjectInfo(){
+ let s=document.getElementById("subjectLesson").value;
+ let g=document.getElementById("lessonGrade").value;
+ document.getElementById("lessonText").innerText=
+ "Kutaa "+g+"\n\n"+lessonInfo[s]+"\n\nMata duree kana kitaaba barataa keessanii wajjin dubbisaa; barsiisaa keessanis gaafadhaa.";
 }
+
+document.getElementById("subjectLesson").addEventListener("change",showSubjectInfo);
+document.getElementById("lessonGrade").addEventListener("change",showSubjectInfo);
+showSubjectInfo();
+
 function readLesson(){
- let t=document.getElementById("lessonResult").innerText;
- if(!("speechSynthesis" in window)){alert("Sagaleen hin deeggaramu.");return;}
+ let t=document.getElementById("lessonText").innerText;
+ speak(t);
+}
+function speak(t){
+ if(!("speechSynthesis" in window)){
+  alert("Meeshaan kee dubbisa sagalee hin deeggaru.");return;
+ }
  let u=new SpeechSynthesisUtterance(t);
- u.lang="om-ET";
+ let l=document.getElementById("language").value;
+ u.lang=l==="om"?"om-ET":l==="am"?"am-ET":"en-US";
  speechSynthesis.cancel();
  speechSynthesis.speak(u);
 }
+
 const bank={
- math:[
- {q:"2 + 3 = meeqa?",a:["4","5","6"],c:1},
- {q:"10 - 4 = meeqa?",a:["5","6","7"],c:1},
- {q:"3 × 2 = meeqa?",a:["5","6","8"],c:1},
- {q:"12 ÷ 3 = meeqa?",a:["3","4","5"],c:1},
- {q:"5 + 5 = meeqa?",a:["10","11","12"],c:0}
- ],
- oromoo:[
- {q:"Afaan Oromoo qubee meeqa qaba?",a:["26","33","40"],c:1},
- {q:"Faallaan jecha 'guddaa' maal?",a:["Xiqqaa","Dheeraa","Bal'aa"],c:0},
- {q:"Jechi 'mana' maal agarsiisa?",a:["Nama","Iddoo jireenyaa","Bineensa"],c:1},
- {q:"Himni maal qaba?",a:["Jecha qofa","Hiika guutuu","Lakkoofsa"],c:1},
- {q:"Faallaan 'guyyaa' maal?",a:["Ganama","Halkan","Waaree"],c:1}
- ]
+math:[
+{q:"2 + 3 = meeqa?",a:["4","5","6"],c:1},
+{q:"10 - 4 = meeqa?",a:["5","6","7"],c:1},
+{q:"3 × 2 = meeqa?",a:["5","6","8"],c:1},
+{q:"12 ÷ 3 = meeqa?",a:["3","4","5"],c:1},
+{q:"5 + 5 = meeqa?",a:["10","11","12"],c:0}
+],
+oromoo:[
+{q:"Faallaan jecha 'guddaa' maal?",a:["Xiqqaa","Dheeraa","Bal'aa"],c:0},
+{q:"Jechi 'mana' maal agarsiisa?",a:["Nama","Iddoo jireenyaa","Bineensa"],c:1},
+{q:"Faallaan 'guyyaa' maal?",a:["Ganama","Halkan","Waaree"],c:1},
+{q:"Afaan Oromoo afaan kami?",a:["Afaan uummataa","Afaan bineensaa","Afaan mallattoo qofa"],c:0},
+{q:"Himni maal qaba?",a:["Hiika guutuu","Lakkoofsa qofa","Halluu"],c:0}
+],
+science:[
+{q:"Biqiltoonni guddachuuf maal barbaadu?",a:["Bishaanii fi ifa","Dhagaa qofa","Sibiila"],c:0},
+{q:"Qaama keenya keessaa kan ittiin arginu?",a:["Gurra","Ija","Harka"],c:1},
+{q:"Bishaan yeroo qabbanaa'u maal ta'a?",a:["Cabbi","Aara","Cirracha"],c:0},
+{q:"Bineensi nyaata barbaadaa?",a:["Eeyyee","Lakki","Yeroo hunda miti"],c:0},
+{q:"Aduun maal kenniti?",a:["Ifaa fi ho'a","Bishaan","Qilleensa qofa"],c:0}
+],
+english:[
+{q:"What is the meaning of 'book'?",a:["Kitaaba","Mana","Bishaan"],c:0},
+{q:"Choose the greeting:",a:["Hello","Stone","Run"],c:0},
+{q:"What is the plural of 'cat'?",a:["Cats","Catted","Caties"],c:0},
+{q:"What colour is the sky on a clear day?",a:["Blue","Green","Black"],c:0},
+{q:"Complete: I ___ a student.",a:["am","are","is"],c:0}
+],
+social:[
+{q:"Maatiin eenyu irraa ijaarama?",a:["Miseensota maatii","Dhagaa","Biqiltoota qofa"],c:0},
+{q:"Aadaan maal dha?",a:["Duudhaa fi jireenya hawaasaa","Lakkoofsa qofa","Tapha qofa"],c:0},
+{q:"Naannoo qulqulluu eeguuf maal goona?",a:["Kosii bakka isaa buusna","Kosii facaafna","Muka murra"],c:0},
+{q:"Seenaa maal nu barsiisa?",a:["Waan darbe beekuu","Boru tilmaamuu qofa","Tapha qofa"],c:0},
+{q:"Hawaasa keessatti maal gochuu qabna?",a:["Wal kabajuu","Wal miidhuu","Wal jibbu"],c:0}
+]
 };
+
 function startQuiz(){
  document.getElementById("quizInfo").innerText="Barataa: "+currentName+" | Kutaa: "+currentGrade;
  document.getElementById("quizResult").classList.add("hidden");
  openPage("quiz");
  loadQuestions();
 }
+
 function loadQuestions(){
- let subject=document.getElementById("subject").value;
- currentQuestions=bank[subject];
+ let s=document.getElementById("subjectQuiz").value;
+ currentQuestions=bank[s];
  let html="";
  currentQuestions.forEach((q,i)=>{
   html+='<div class="question"><b>'+(i+1)+'. '+q.q+'</b>';
@@ -228,48 +377,66 @@ function submitQuiz(){
   }
  });
  if(answered!==currentQuestions.length){
-  alert("Gaaffii hunda deebisi.");
-  return;
+  alert("Gaaffii hunda deebisi.");return;
  }
- let subject=document.getElementById("subject").value==="math"?"Herrega":"Afaan Oromoo";
+ let subject=document.getElementById("subjectQuiz");
+ let subjectName=subject.options[subject.selectedIndex].text;
  let percent=Math.round(score/currentQuestions.length*100);
  let record={
-  name:currentName,
-  grade:currentGrade,
-  subject:subject,
-  score:score,
-  total:currentQuestions.length,
-  percent:percent,
-  date:new Date().toLocaleDateString()
+ name:currentName,grade:currentGrade,subject:subjectName,
+ score:score,total:currentQuestions.length,percent:percent,
+ date:new Date().toLocaleDateString()
  };
  let scores=getScores();
  scores.push(record);
- try{
-  localStorage.setItem("tolaScores",JSON.stringify(scores));
- }catch(e){
-  alert("Kuusaan bilbilaa guutamuu danda'a.");
- }
+ try{localStorage.setItem("tolaScores",JSON.stringify(scores));}
+ catch(e){alert("Qabxii kuusuu irratti rakkoon uumame.");}
  let r=document.getElementById("quizResult");
  r.classList.remove("hidden");
  r.innerText="Qormaanni xumurame!\nQabxii: "+score+"/"+currentQuestions.length+
- "\nDhibbeentaa: "+percent+"%\nBarnoota: "+subject+
- "\n\nBu'aan kee bilbila kana keessatti kuufameera.";
+ "\nDhibbeentaa: "+percent+"%\nBarnoota: "+subjectName+
+ "\nBu'aan bilbila kana irratti kuufameera.";
 }
 function myScores(){
- let arr=getScores().filter(x=>x.name===currentName);
- displayScores(arr);
+ displayScores(getScores().filter(x=>x.name===currentName));
 }
-function showScores(){
- displayScores(getScores());
-}
+function showScores(){displayScores(getScores());}
 function displayScores(arr){
  openPage("scores");
  let el=document.getElementById("scoresList");
- if(arr.length===0){el.innerText="Qabxiin ammaaf hin jiru.";return;}
+ if(!arr.length){el.innerText="Qabxiin ammaaf hin jiru.";return;}
  el.innerText=arr.map(x=>
-  x.name+" | Kutaa "+x.grade+" | "+x.subject+
-  " | "+x.score+"/"+x.total+" ("+x.percent+"%) | "+x.date
+ x.name+" | Kutaa "+x.grade+" | "+x.subject+
+ " | "+x.score+"/"+x.total+" ("+x.percent+"%) | "+x.date
  ).join("\n\n");
+}
+
+let mathA=7,mathB=5;
+function newMath(){
+ mathA=Math.floor(Math.random()*10)+1;
+ mathB=Math.floor(Math.random()*10)+1;
+ document.getElementById("mathQuestion").innerText=mathA+" + "+mathB+" = meeqa?";
+ document.getElementById("mathAnswer").value="";
+ document.getElementById("mathResult").innerText="";
+}
+function checkMath(){
+ let a=document.getElementById("mathAnswer").value;
+ if(a===""){alert("Deebii kee barreessi.");return;}
+ document.getElementById("mathResult").innerText=
+ Number(a)===mathA+mathB?"Sirrii dha! Baga gammaddan! 🎉":"Irra deebi'ii yaali.";
+}
+
+function readStory(){
+ speak("Mucaa fi Mukaa. Mucaan tokko muka xiqqoo dhaabe. Guyyaa guyyaan bishaan obaase. Yeroo booda mukti guddatee gaaddisa kenneef. Barumsa: Wanti gaariin obsaa fi kunuunsa barbaada.");
+}
+function showMemoryQuestion(){
+ document.getElementById("memoryQuestion").classList.remove("hidden");
+ document.getElementById("memoryWord").innerText="???";
+}
+function checkMemory(){
+ let a=document.getElementById("memoryAnswer").value.trim().toLowerCase();
+ document.getElementById("memoryResult").innerText=
+ a==="muka"?"Sirrii dha! 🎉":"Deebiin sirrii: MUKA";
 }
 </script>
 </body>
